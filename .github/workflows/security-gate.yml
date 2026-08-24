@@ -48,4 +48,28 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      
+  quarantine-on-failure:
+    name: Quarantine Failed Build
+    if: ${{ failure() }}
+    needs: security-gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create quarantine record
+        run: |
+          mkdir -p quarantine
+          cat > quarantine/SECURITY_GATE_FAILED.txt <<'EOF'
+          SECURITY GATE FAILED
+
+          The CI security gate detected a failed validation, lint,
+          formatting, or secret-scanning check.
+
+          Build status: QUARANTINED
+          Further review is required before this change can be accepted.
+          EOF
+
+      - name: Upload quarantine artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: quarantined-build
+          path: quarantine/SECURITY_GATE_FAILED.txt

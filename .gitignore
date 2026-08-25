@@ -1,6 +1,12 @@
 .git/
 task-1-terraform/.git/
-.venv/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+tfplan
 
 # Python / Django
 .venv/

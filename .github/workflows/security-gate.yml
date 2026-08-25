@@ -38,7 +38,7 @@ jobs:
         run: pip install black flake8
 
       - name: Check Python formatting
-        run: black --check task-3-django
+        run: black --check task-3-django --exclude '(^|/)(.venv|migrations)(/|$)'
 
       - name: Run Python lint
         run: flake8 task-3-django

@@ -1,3 +1,11 @@
 .git/
 task-1-terraform/.git/
 .venv/
+
+# Python / Django
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.sqlite3
+.env

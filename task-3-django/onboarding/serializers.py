@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .dcyn import requires_support_dcyn
+from .dcyn import from_raw_input, requires_support_dcyn
 from .models import StudentOnboarding
 
 
@@ -16,6 +16,17 @@ class StudentOnboardingSerializer(serializers.ModelSerializer):
             "requires_support",
             "support_decision",
         ]
+
+    def to_internal_value(self, data):
+        data = data.copy()
+
+        if "requires_support" in data:
+            try:
+                data["requires_support"] = from_raw_input(data["requires_support"])
+            except ValueError as exc:
+                raise serializers.ValidationError({"requires_support": str(exc)})
+
+        return super().to_internal_value(data)
 
     def validate_student_id(self, value):
         value = value.strip()

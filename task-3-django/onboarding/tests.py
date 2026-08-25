@@ -22,7 +22,7 @@ class StudentOnboardingSerializerTests(TestCase):
         return {
             "student_id": "STU001",
             "student_name": "Riya",
-            "region": "Mumbai",
+            "region": "IN-WEST",
             "requires_support": True,
         }
 

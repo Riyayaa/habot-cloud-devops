@@ -38,10 +38,12 @@ jobs:
         run: pip install black flake8
 
       - name: Check Python formatting
-        run: black --check task-3-django --exclude '(^|/)(.venv|migrations)(/|$)'
+        working-directory: task-3-django
+        run: black --check . --exclude '(^|/)(\.venv|migrations)(/|$)'
 
       - name: Run Python lint
-        run: flake8 task-3-django
+        working-directory: task-3-django
+        run: flake8 .
 
       - name: Run Gitleaks secret scan
         uses: gitleaks/gitleaks-action@v2
